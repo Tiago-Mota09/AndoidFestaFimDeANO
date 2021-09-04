@@ -36,4 +36,15 @@
         android:text="@string/voc_vai_participar"
         android:textSize="30sp" />
 
+        <Button
+        android:id="@+id/button_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/round_corner_button"
+        android:padding="20dp"
+        android:text="sim/não/não confirmado"
+        android:textColor="@color/colorTextWhite"
+        android:textSize="20sp" />
+
 </LinearLayout>

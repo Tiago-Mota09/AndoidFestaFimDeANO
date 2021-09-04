@@ -1,21 +1,16 @@
 package com.devmasterteam.festafimdeano.views;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.devmasterteam.festafimdeano.R;
-import com.devmasterteam.festafimdeano.constants.FimDeAnoConstants;
 import com.devmasterteam.festafimdeano.util.SecurityPreferences;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
     private ViewHolder mViewHolder = new ViewHolder();
     private SecurityPreferences mSecurityPreferences;
@@ -28,9 +23,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         this.mViewHolder.textToday = findViewById(R.id.text_today);
         this.mViewHolder.textDaysLeft = findViewById(R.id.text_days_left);
-        this.mViewHolder.buttonConfirm = findViewById(R.id.button_confirm);
-
-        this.mViewHolder.buttonConfirm.setOnClickListener(this);
 
         this.mSecurityPreferences = new SecurityPreferences(this);
 
@@ -43,23 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume(){
         super.onResume();
-        this.verifyPresence();
     }
-
-    @Override
-    public void onClick(View view) {
-        int id = view.getId();
-        if (id == R.id.button_confirm) {
-
-            String presence = this.mSecurityPreferences.getStoredString(FimDeAnoConstants.PRESENCE);
-
-            // Lógica de navegação
-            Intent intent = new Intent(this, DetailsActivity.class);
-            intent.putExtra(FimDeAnoConstants.PRESENCE, presence);
-            startActivity(intent);
-        }
-    }
-
     private int getDaysLeftToEndOfYear(){
         // Incializa instância do calendário e obtém o dia do ano
         Calendar calendarToday = Calendar.getInstance();
@@ -73,22 +49,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return dayDecember19 - today;
     }
 
-    private void verifyPresence(){
-        String presence = this.mSecurityPreferences.getStoredString(FimDeAnoConstants.PRESENCE);
-        if (presence.equals(""))
-            this.mViewHolder.buttonConfirm.setText(R.string.nao_confirmado);
-        else if (presence.equals(FimDeAnoConstants.CONFIRMED_WILL_GO))
-            this.mViewHolder.buttonConfirm.setText(R.string.sim);
-        else
-            this.mViewHolder.buttonConfirm.setText(R.string.nao);
-    }
-
     /**
      * Padrão ViewHolder
      * */
     private static class ViewHolder {
         TextView textToday;
         TextView textDaysLeft;
-        Button buttonConfirm;
     }
 }
